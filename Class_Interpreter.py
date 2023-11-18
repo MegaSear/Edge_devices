@@ -1,6 +1,7 @@
 import numpy as np
 import transform3d as t3d
-from Set_Char3D import char_dict, char_shape
+from scipy.spatial.transform import Rotation as R
+from Class_Set import char_dict, char_shape
 
 class Word_Interpreter():
     def __init__(self):
@@ -9,21 +10,21 @@ class Word_Interpreter():
         self.char_shape = char_shape
         return
     
-    def transform(points_3d):
+    def transform(self, points_3d):
         points_3d = np.array(points_3d)
 
         #Сдвиг каждой точки на вектор
-        (dx, dy, dz) = (5, 5, 0)
+        (dx, dy, dz) = (2, 5, 0)
         translation_vector = np.array([dx, dy, dz])
         translated_points = points_3d + translation_vector
 
         #Поворот в плоскости
         rotation_angle = np.radians(0)  # в градусах
-        rotation_matrix = t3d.axangles.axangle2mat((0, 0, 1), rotation_angle)
+        rotation_matrix = R.from_euler('x', rotation_angle).as_matrix()
         translated_points = np.dot(translated_points, rotation_matrix.T)
 
         #Масштабирование координат
-        scaling_factor = 1.5  # коэффициент масштабирования
+        scaling_factor = 1  # коэффициент масштабирования
         translated_points = translated_points * scaling_factor
 
         return translated_points
@@ -47,6 +48,6 @@ class Word_Interpreter():
 
             #Исходя из известных данных о положении плоскости рисования и модели roboarm трансформируем координаты
             #Добавим последовательность точек в итоговый список точек
-            translation += self.transform(shifted_points_3d)
+            translation += (self.transform(shifted_points_3d)).tolist()
             
         return translation
