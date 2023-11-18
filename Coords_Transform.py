@@ -34,5 +34,8 @@ def angles_solver(point_1, point_2, L1, L2):
     point_3 = np.array([point_1[0] + L1 * np.cos(np.radians(alpha)),
                         point_1[1] + L1 * np.sin(np.radians(alpha)),
                         point_1[2]])
-
-    return point_3, alpha, beta, gamma
+    #point_3
+    fi1 = 180 - alpha
+    fi2 = alpha + beta - 70
+    fi3 = gamma
+    return fi1, fi2, fi3
