@@ -11,6 +11,8 @@ class Robo_arm():
         return 0
 
     def slow_angles(self, new_angles):
+        new_angles = list(map(int, new_angles))
+        
         while True:
             #Получим список единичных векторов направлений движения (углов) для каждой servo
             #Исходя из текущего угла и целевого

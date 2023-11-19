@@ -14,7 +14,7 @@ class Word_Interpreter():
         points_3d = np.array(points_3d)
 
         #Сдвиг каждой точки на вектор
-        (dx, dy, dz) = (2, 5, 0)
+        (dx, dy, dz) = (2, 2, 5)
         translation_vector = np.array([dx, dy, dz])
         translated_points = points_3d + translation_vector
 
