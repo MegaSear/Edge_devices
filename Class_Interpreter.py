@@ -1,5 +1,4 @@
 import numpy as np
-import transform3d as t3d
 from scipy.spatial.transform import Rotation as R
 from Class_Set import char_dict, char_shape
 
@@ -13,26 +12,27 @@ class Word_Interpreter():
     def transform(self, points_3d):
         points_3d = np.array(points_3d)
 
-        #Сдвиг каждой точки на вектор
-        (dx, dy, dz) = (2, 2, 5)
-        translation_vector = np.array([dx, dy, dz])
-        translated_points = points_3d + translation_vector
-
         #Поворот в плоскости
         rotation_angle = np.radians(0)  # в градусах
         rotation_matrix = R.from_euler('x', rotation_angle).as_matrix()
-        translated_points = np.dot(translated_points, rotation_matrix.T)
+        translated_points = np.dot(points_3d, rotation_matrix.T)
 
         #Масштабирование координат
         scaling_factor = 1  # коэффициент масштабирования
         translated_points = translated_points * scaling_factor
+
+        #Сдвиг каждой точки на вектор
+        (dx, dy, dz) = (2, 2, 3)
+        translation_vector = np.array([dx, dy, dz])
+        translated_points = translated_points  + translation_vector
+
 
         return translated_points
     
     def translate(self, word):
         self.word = list(word)
         translation = []
-        offset_z = 2
+        offset_z = 7
         offset_x = self.char_shape[0]
 
         for i, char in enumerate(self.word):
