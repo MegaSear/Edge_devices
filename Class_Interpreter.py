@@ -18,11 +18,11 @@ class Word_Interpreter():
         translated_points = np.dot(points_3d, rotation_matrix.T)
 
         #Масштабирование координат
-        scaling_factor = 1  # коэффициент масштабирования
+        scaling_factor = 1.3  # коэффициент масштабирования
         translated_points = translated_points * scaling_factor
 
         #Сдвиг каждой точки на вектор
-        (dx, dy, dz) = (2, 2, 3)
+        (dx, dy, dz) = (3, 3, 4)
         translation_vector = np.array([dx, dy, dz])
         translated_points = translated_points  + translation_vector
 

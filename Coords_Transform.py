@@ -1,27 +1,24 @@
 import numpy as np
 
-def angles_solver(point_1, point_2, L1, L2):
+def angles_solver(point_2, L1, L2):
 
     o = np.array([0, 0, 0])
-    r = 5
-    dz = 6
+    r = 4.7
+    dz = 8 #11 8
     n_y = np.array([0, 1, 0])
     n_z = np.array([0, 0, 1])
     n_x = np.array([1, 0, 0])
 
     Vec = point_2 - o
-    teta = np.pi/2 - np.arccos(np.dot(Vec, n_z) / (np.linalg.norm(Vec) * np.linalg.norm(n_z)))
 
-    Vec_cos = Vec*np.cos(teta)
-    cos_gamma = np.dot(Vec_cos, n_y) / (np.linalg.norm(Vec_cos) * np.linalg.norm(n_y))
-    gamma = np.arccos(cos_gamma) #Радианы
+    Vec_cos = np.array([Vec[0], Vec[1], 0])
+    gamma = np.arccos(np.dot(Vec_cos, n_y) / (np.linalg.norm(Vec_cos) * np.linalg.norm(n_y)))  #Радианы
 
-    r_vec = np.array([r*np.cos(gamma), r*np.sin(gamma), dz])
+    r_vec = np.array([r* np.sin(gamma), r* np.cos(gamma), dz])
 
-    point_1 += r_vec
-
-    point_1 = np.array(point_1)
+    point_1 = np.array(r_vec)
     point_2 = np.array(point_2)
+
     V = point_2 - point_1
     L3 = np.linalg.norm(V)
     
@@ -34,7 +31,7 @@ def angles_solver(point_1, point_2, L1, L2):
     if L1 + L2 < L3:
         print("The target point is unreachable (far away)!")
     
-    if L1 - L2 > L3:
+    if L2 - L1 > L3:
         print("The target point is unreachable (too close)!")
         
     s1 = 1 #(квадрант)
@@ -47,20 +44,11 @@ def angles_solver(point_1, point_2, L1, L2):
 
     cos_alpha2 = np.dot(V, n_z) / (np.linalg.norm(V) * np.linalg.norm(n_z))
     alpha2 = np.pi/2 - np.arccos(cos_alpha2) #Радианы
-    
-    #n_y = np.array([0, 1, 0])
-    #V_cos = V*np.cos(alpha2)
-    #cos_gamma = np.dot(V, n_y) / (np.linalg.norm(V_cos) * np.linalg.norm(n_y))
-    #gamma = np.arccos(cos_gamma) #Радианы
 
     alpha = alpha1 + alpha2 #Радианы
     if alpha2 < 0 and alpha1 < abs(alpha2):
         alpha = - (alpha1 + abs(alpha2))
 
-    direction_vector = np.array([np.cos(alpha) * np.cos(gamma), np.cos(alpha) * np.sin(gamma), np.sin(alpha)])
-    point_3 = point_1 + L1 * direction_vector
-
-    #return point_3, 
     alpha = np.degrees(alpha)
     beta = np.degrees(beta)
     gamma = np.degrees(gamma)
