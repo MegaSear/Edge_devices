@@ -1,2 +1,1 @@
-Файлы python для управления простым трёхсервоприводным механизмом.
-Краткое объяснение: "роборука рисует буквы"
+Controlling three servos of a special letter drawing device
